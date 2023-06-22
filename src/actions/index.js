@@ -66,3 +66,155 @@ export function isTokenTxpired(data){
             })
         }
 }
+
+export function createBook(data){
+    return async (dispatch) => {
+    const headers = {
+        Authorization: `Bearer ${data.accessToken}`,
+        'Content-Type': 'multipart/form-data'
+      };
+
+      axios
+      .post(baseUrl+'/home/create_book/', data, { headers })
+      .then((response) => {
+        toast.success('Book created successfully')
+      })
+      .catch((error) => {
+       if(error.response.data.detail){
+        toast.error(error.response.data.detail)
+       }else{
+        toast.error('error occur try again')
+       }
+      });
+    }
+  
+}
+
+export function getDetailsBook(data){
+    return async (dispatch) => {
+          axios
+      .get(baseUrl+`/home/book_detail/${data.pk}/`)
+      .then((response) => {
+
+        dispatch({
+            type: "BOOKDETAIL",
+            payload: response.data
+          });
+      })
+      .catch((error) => {
+       if(error.response.data.detail){
+        toast.error(error.response.data.detail)
+       }else{
+        toast.error('error occur try again')
+       }
+      });
+    }
+}
+
+export function updateBook(data){
+    return async (dispatch) => {
+        const headers = {
+            Authorization: `Bearer ${data.accessToken}`,
+            'Content-Type': 'multipart/form-data'
+          };
+          axios
+        .put(baseUrl+`/home/book_update/${data.pk}/`,data,{headers})
+      .then((response) => {
+        toast.success('Book updated successfully')
+        dispatch({
+            type: "BOOKDETAIL",
+            payload: response.data
+          });
+      })
+      .catch((error) => {
+       if(error.response.data.detail){
+        toast.error(error.response.data.detail)
+       }else{
+        toast.error('error occur try again')
+       }
+      });
+    }
+}
+
+
+export function getBooks(currentPage){
+    return async (dispatch) => {
+        axios.get(baseUrl+`/home/books/?page=${currentPage}`).then((response)=>{
+
+            dispatch({
+                type: "BOOKS",
+                payload: response.data
+              });
+        }).catch((error)=>{
+            console.log(error);
+            toast.error('error occur try again')
+        })
+    }
+
+}
+
+export function getPages(currentPage,id_book){
+    return async (dispatch) => {
+        axios.get(baseUrl+`/home/page_list/${id_book}/?page=${currentPage}`).then((response)=>{
+            dispatch({
+                type: "PAGES",
+                payload: response.data
+              });
+        }).catch((error)=>{
+            console.log(error);
+            toast.error('error occur try again')
+        })
+    }
+
+}
+
+export function createPage(data,props){
+    return async (dispatch) => {
+        const headers = {
+            Authorization: `Bearer ${data.accessToken}`,
+            'Content-Type': 'multipart/form-data'
+          };
+        axios.post(baseUrl+`/home/page_create/`,data,{headers}).then((response)=>{
+            toast.success('Page created successfully')
+            props.getPages(data.cuurentPage,data.book)
+        }).catch((error)=>{
+            console.log(error);
+            toast.error('error occur try again')
+        })
+    }
+
+}
+
+export function updatePage(data,props){
+    return async (dispatch) => {
+        const headers = {
+            Authorization: `Bearer ${data.accessToken}`,
+            'Content-Type': 'multipart/form-data'
+          };
+        axios.put(baseUrl+`/home/page_update/${data.pk}/`,data,{headers}).then((response)=>{
+            toast.success('Page updated successfully')
+            props.getPages(data.cuurentPage,data.book)
+        }).catch((error)=>{
+            console.log(error);
+            toast.error('error occur try again')
+        })
+    }
+
+}
+
+export function deletePage(data,props){
+    return async (dispatch) => {
+        const headers = {
+            Authorization: `Bearer ${data.accessToken}`,
+            'Content-Type': 'multipart/form-data'
+          };
+        axios.delete(baseUrl+`/home/page_delete/${data.pk}/`,{headers}).then((response)=>{
+            toast.success('Page deleted successfully')
+            props.getPages(data.cuurentPage,data.book)
+        }).catch((error)=>{
+            console.log(error);
+            toast.error('error occur try again')
+        })
+    }
+
+}

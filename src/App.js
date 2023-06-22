@@ -7,6 +7,7 @@ import Footer from './index/components/footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomePage from './index/components/home';
+import EditBook from './index/components/editBook';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/' element={<Index/>}></Route>
         <Route path='/login' element={<Index/>}></Route>
         <Route path='/home' element={<HomePage/>}></Route>
+        <Route path='/editBook/:id' element={<EditBook/>}></Route>
        </Routes>
        <Footer/>
     </BrowserRouter>

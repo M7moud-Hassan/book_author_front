@@ -1,9 +1,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import 'dropify/dist/css/dropify.min.css';
 import { connect } from "react-redux";
 import * as actions from '../../actions/index'
+import 'dropify/dist/css/dropify.min.css';
 import 'dropify/dist/js/dropify.min.js';
 import '../css/main.css'
 import $ from 'jquery';

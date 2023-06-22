@@ -1,6 +1,6 @@
 var a = 0;
 $(window).scroll(function() {
-
+    if($('.mu-single-counter').length){
   var oTop = $('.mu-single-counter').offset().top - window.innerHeight;
   if (a == 0 && $(window).scrollTop() > oTop) {
     $('.counter-value').each(function() {
@@ -28,5 +28,6 @@ $(window).scroll(function() {
     });
     a = 1;
   }
+}
 
 });

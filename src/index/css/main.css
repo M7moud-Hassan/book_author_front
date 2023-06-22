@@ -269,3 +269,26 @@
 .form-label{
     color: white;
 }
+.MuiPagination-ul li{
+	list-style-type: none !important;
+}
+.MuiPagination-ul li button,.MuiSvgIcon-root{
+	font-size: 30px !important;
+}
+.btn-save{
+	margin-bottom: 10px;
+	width: 25%;
+}
+
+.fa-icon-delete{
+	cursor: pointer;
+	color: red;
+	float: left;
+	font-size: 30px;
+}
+.fa-icon-edit{
+	cursor: pointer;
+	color: green;
+	float: right;
+	font-size: 30px;
+}
