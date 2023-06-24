@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import '../css/main.css'
 import { Editor } from "@tinymce/tinymce-react";
 import { connect } from 'react-redux';
-import * as actions from '../../actions/index'
+import * as actions from '../actions/index'
 import { useParams } from 'react-router-dom';
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
@@ -42,9 +42,9 @@ function EditBook(props) {
     };
 
     const openDialogBoxPage = () => {
-       setTimeout(()=>{
-        handleDisplayPage(true);
-       },300)
+        setTimeout(() => {
+            handleDisplayPage(true);
+        }, 300)
     }
 
     const openDialogBox = () => {
@@ -112,18 +112,19 @@ function EditBook(props) {
         } else {
             window.location = '/'
         }
-        
+
         var data = {
             pk: id,
-            "id_author":authorData.user.id
+            "id_author": authorData.user.id,
+            accessToken: authorData.access_token
         }
         props.getDetailsBook(data)
-        props.getPages(currentPage, id)
+        props.getPages(currentPage, id, authorData.access_token)
     }, [])
 
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
-        props.getPages(page, id);
+        props.getPages(page, id, authorData.access_token);
     };
 
     const handleChange = (content, editor) => {
@@ -132,20 +133,19 @@ function EditBook(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        var data={
+        var data = {
             "accessToken": authorData.access_token,
-            "number":numPage,
-            "book":id,
-            "content":content,
-            "cuurentPage":currentPage,
-            "pk":idPage
+            "number": numPage,
+            "book": id,
+            "content": content,
+            "cuurentPage": currentPage,
+            "pk": idPage
         }
-       if(numPage==Number((props.pages.results.length+1)))
-       {
-        props.createPage(data,props)
-       }else{
-        props.updatePage(data,props)
-       }
+        if (numPage == Number((props.pages.results.length + 1))) {
+            props.createPage(data, props)
+        } else {
+            props.updatePage(data, props)
+        }
         handleDisplayPage(false)
         setContent('')
     }
@@ -153,22 +153,22 @@ function EditBook(props) {
 
     const handleDelete = () => {
         setOpenDelete(true);
-      };
-    
-      const handleCloseDelete = () => {
+    };
+
+    const handleCloseDelete = () => {
         setOpenDelete(false);
-      };
-    
-      const handleConfirmDelete = () => {
-        var data={
+    };
+
+    const handleConfirmDelete = () => {
+        var data = {
             "accessToken": authorData.access_token,
-            "pk":idPage,
-            "book":id,
-            "cuurentPage":currentPage,
+            "pk": idPage,
+            "book": id,
+            "cuurentPage": currentPage,
         }
-        props.deletePage(data,props)
+        props.deletePage(data, props)
         setOpenDelete(false);
-      };
+    };
     return authorData && props.bookDetails ? <>
         <section id="mu-hero">
             <div class="container">
@@ -184,12 +184,12 @@ function EditBook(props) {
                     </div>
 
                     <div class="col-md-6 col-sm-6 col-sm-pull-6">
-                         <div class="mu-hero-left">
+                        <div class="mu-hero-left">
                             <h1>use can edit book or add some pages to it</h1>
                             <p>you can edit name or photo of book from this button</p>
                             <a onClick={openDialogBox} class="mu-primary-btn">edit book</a>
-                           
-                        </div> 
+
+                        </div>
                     </div>
 
                 </div>
@@ -208,13 +208,13 @@ function EditBook(props) {
                                     <h2 class="mu-heading-title">Pages of {props.bookDetails.title}</h2>
                                     <span class="mu-header-dot"></span>
                                     <div>
-                                    <button type="button" class="btn btn-primary" onClick={()=>{
-                                        setNumPage(props.pages.results?props.pages.results.length+1:0)
-                                        setContent('')
-                                        openDialogBoxPage()
-                                    }}>
-                                       Add Pages
-                                    </button>
+                                        <button type="button" class="btn btn-primary" onClick={() => {
+                                            setNumPage(props.pages.results ? props.pages.results.length + 1 : 0)
+                                            setContent('')
+                                            openDialogBoxPage()
+                                        }}>
+                                            Add Pages
+                                        </button>
                                     </div>
 
                                 </div>
@@ -230,19 +230,19 @@ function EditBook(props) {
                                                     </span>
                                                     <h4>Page {ele.number}</h4>
                                                     <div>
-                                                    <i  class="fa fa-trash fa-icon-delete" onClick={
-                                                        ()=>{
+                                                        <i class="fa fa-trash fa-icon-delete" onClick={
+                                                            () => {
+                                                                setNumPage(ele.number)
+                                                                setIdPage(ele.id)
+                                                                handleDelete()
+                                                            }
+                                                        } aria-hidden="true"></i>
+                                                        <i class="fas fa-edit fa-icon-edit" onClick={() => {
                                                             setNumPage(ele.number)
                                                             setIdPage(ele.id)
-                                                            handleDelete()
-                                                        }
-                                                    } aria-hidden="true"></i>
-                                                    <i class="fas fa-edit fa-icon-edit" onClick={()=>{
-                                                       setNumPage(ele.number)
-                                                       setIdPage(ele.id)
-                                                       setContent(ele.content)
-                                                       handleDisplayPage(true)
-                                                    }}></i>
+                                                            setContent(ele.content)
+                                                            handleDisplayPage(true)
+                                                        }}></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -268,23 +268,23 @@ function EditBook(props) {
         </main>
 
         <Dialog onClose={handleClosePage} open={openDialogPage}>
-            <DialogTitle> {numPage==(props.pages.results?props.pages.results.length+1:0)?'Add Page':'Update Page'} </DialogTitle>
+            <DialogTitle> {numPage == (props.pages.results ? props.pages.results.length + 1 : 0) ? 'Add Page' : 'Update Page'} </DialogTitle>
             <form onSubmit={handleSubmit}>
-         <h3 className="text-center">Page {numPage}</h3>
-         <Editor
-        // apiKey={"aul16ni1wyfshcuof1s88xy7ya3jw61q8dh5kfl26bhaxf0z"}
-          value={content}
-          init={{
-            height: 300,
-            menubar: false
-          }}
-          onEditorChange={handleChange}
-        />
-        <br />
-        <div className="text-center">
-        <input type="submit" className="btn btn-primary btn-save" value={numPage==(props.pages.results?props.pages.results.length+1:0)?'Save':'Update'}  />
-        </div>
-      </form>
+                <h3 className="text-center">Page {numPage}</h3>
+                <Editor
+                    // apiKey={"aul16ni1wyfshcuof1s88xy7ya3jw61q8dh5kfl26bhaxf0z"}
+                    value={content}
+                    init={{
+                        height: 300,
+                        menubar: false
+                    }}
+                    onEditorChange={handleChange}
+                />
+                <br />
+                <div className="text-center">
+                    <input type="submit" className="btn btn-primary btn-save" value={numPage == (props.pages.results ? props.pages.results.length + 1 : 0) ? 'Save' : 'Update'} />
+                </div>
+            </form>
         </Dialog>
         <Dialog onClose={handleClose} open={openDialog}>
             <DialogTitle> Update Book </DialogTitle>
@@ -326,21 +326,21 @@ function EditBook(props) {
         </Dialog>
 
         <Dialog open={openDelete} onClose={handleCloseDelete}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          <DialogContentText style={{
-            fontSize:'20px'
-          }}>
-            Are you sure you want to delete page {numPage}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDelete}>Cancel</Button>
-          <Button onClick={handleConfirmDelete} autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogContent>
+                <DialogContentText style={{
+                    fontSize: '20px'
+                }}>
+                    Are you sure you want to delete page {numPage}
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCloseDelete}>Cancel</Button>
+                <Button onClick={handleConfirmDelete} autoFocus>
+                    Delete
+                </Button>
+            </DialogActions>
+        </Dialog>
     </> : <></>
 }
 

@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import * as actions from '../../actions/index'
+import * as actions from '../actions/index'
 import { useEffect, useRef, useState } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
@@ -10,7 +10,8 @@ import { Pagination } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-function AuthorBooks(props){
+import { NavLink } from "react-router-dom";
+function AuthorBooks(props) {
     const [openDialog, handleDisplay] = useState(false);
     const imageInputRef = useRef(null);
     const [title, setTitle] = useState('');
@@ -25,33 +26,32 @@ function AuthorBooks(props){
         handleDisplay(false);
         setTitle('')
     };
-    useEffect(()=>{
+    useEffect(() => {
         if (userData) {
             props.isTokenTxpired({ "token": userData.access_token });
-        } else if (userData.group!='Authors')
-        {
+        } else if (userData.group != 'Authors') {
             window.location = '/home'
         } else {
             window.location = '/'
         }
-         var data={
-            "currentPage":currentPage,
-            "id":userData.user.id,
+        var data = {
+            "currentPage": currentPage,
+            "id": userData.user.id,
             "accessToken": userData.access_token,
         }
         props.getBooksAuthor(data)
-    },[])
+    }, [])
 
     const handleDelete = () => {
         setOpenDelete(true);
-      };
+    };
 
 
-      const handlePageChange = (event, page) => {
+    const handlePageChange = (event, page) => {
         setCurrentPage(page);
-        var data={
-            "currentPage":currentPage,
-            "id":userData.user.id,
+        var data = {
+            "currentPage": currentPage,
+            "id": userData.user.id,
             "accessToken": userData.access_token,
         }
         props.getBooksAuthor(data)
@@ -83,53 +83,53 @@ function AuthorBooks(props){
             "author": userData.user.id,
             "accessToken": userData.access_token,
             "image": image,
-            "currentPage":currentPage
+            "currentPage": currentPage
         }
         setTitle('')
-        props.createBook(data,props)
+        props.createBook(data, props)
     };
 
-       const handleConfirmDelete = () => {
-        var data={
-            "currentPage":currentPage,
-            "id":userData.user.id,
+    const handleConfirmDelete = () => {
+        var data = {
+            "currentPage": currentPage,
+            "id": userData.user.id,
             "accessToken": userData.access_token,
-            "id_book":id_book
+            "id_book": id_book
         }
-        props.deleteBook(data,props)
+        props.deleteBook(data, props)
         setOpenDelete(false);
-      };
+    };
 
-      const handleCloseDelete = () => {
+    const handleCloseDelete = () => {
         setOpenDelete(false);
-      };
-    
+    };
+
 
     return <>
-     <section id="mu-hero">
+        <section id="mu-hero">
             <div class="container">
                 <div class="row">
 
-                   {userData.group=='Authors'?( <>
-                    <div class="col-md-6 col-sm-6 col-sm-push-6">
-                        <div class="mu-hero-right">
-                            <img src={`http://localhost:8000${userData.user.image}`} className="imageRigth"  alt="Ebook img" />
+                    {userData.group == 'Authors' ? (<>
+                        <div class="col-md-6 col-sm-6 col-sm-push-6">
+                            <div class="mu-hero-right">
+                                <img src={`http://localhost:8000${userData.user.image}`} className="imageRigth" alt="Ebook img" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 col-sm-6 col-sm-pull-6">
-                        <div class="mu-hero-left">
-                            <h1>Wellcome {userData.username} in  Page of Your Books add Book Now</h1>
-                            <p>From this Home Page Can you Create Book Or Edit Book and manage yout pages</p>
-                            <a onClick={openDialogBox} class="mu-primary-btn">Create Book</a>
-                        </div>
-                    </div></>):<></>}
+                        <div class="col-md-6 col-sm-6 col-sm-pull-6">
+                            <div class="mu-hero-left">
+                                <h1>Wellcome {userData.username} in  Page of Your Books add Book Now</h1>
+                                <p>From this Home Page Can you Create Book Or Edit Book and manage yout pages</p>
+                                <a onClick={openDialogBox} class="mu-primary-btn">Create Book</a>
+                            </div>
+                        </div></>) : <></>}
 
                 </div>
             </div>
         </section>
         <main role="main">
-               <section id="mu-book-overview">
+            <section id="mu-book-overview">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -144,29 +144,31 @@ function AuthorBooks(props){
                                 <div class="mu-book-overview-content">
                                     <div class="row">
                                         {props.books.results ? props.books.results.map((ele) => {
-                                            console.log(ele);
                                             return <div class="col-md-3 col-sm-6">
                                                 <div class="mu-book-overview-single">
-                                                    <span class="mu-book-overview-icon-box">
-                                                        <img src={"http://localhost:8000" + ele.image} style={{
-                                                            height: "200px"
-                                                        }} />
-                                                    </span>
+                                                    <NavLink to={`/view_book/${ele.id}`}>
+                                                        <span class="mu-book-overview-icon-box">
+                                                            <img src={"http://localhost:8000" + ele.image} style={{
+                                                                height: "200px"
+                                                            }} />
+                                                        </span>
+                                                    </NavLink>
                                                     <h4>{ele.title}</h4>
                                                     <div>
-                                                    <i  class="fa fa-trash fa-icon-delete" onClick={
-                                                        ()=>{
-                                                            SetIdBook(ele.id)
-                                                          setTitleBook(ele.title)
-                                                          handleDelete()
-                                                        }
-                                                    } aria-hidden="true"></i>
-                                                    <i class="fas fa-edit fa-icon-edit" onClick={()=>{
-                                                      window.location="/editBook/"+ele.id
-                                                    }}></i>
+                                                        <i class="fa fa-trash fa-icon-delete" onClick={
+                                                            () => {
+                                                                SetIdBook(ele.id)
+                                                                setTitleBook(ele.title)
+                                                                handleDelete()
+                                                            }
+                                                        } aria-hidden="true"></i>
+                                                        <i class="fas fa-edit fa-icon-edit" onClick={() => {
+                                                            window.location = "/editBook/" + ele.id
+                                                        }}></i>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         }) : <></>}
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -224,21 +226,21 @@ function AuthorBooks(props){
         </Dialog>
 
         <Dialog open={openDelete} onClose={handleCloseDelete}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          <DialogContentText style={{
-            fontSize:'20px'
-          }}>
-            Are you sure you want to delete Book {titleBook}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDelete}>Cancel</Button>
-          <Button onClick={handleConfirmDelete} autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogContent>
+                <DialogContentText style={{
+                    fontSize: '20px'
+                }}>
+                    Are you sure you want to delete Book {titleBook}
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCloseDelete}>Cancel</Button>
+                <Button onClick={handleConfirmDelete} autoFocus>
+                    Delete
+                </Button>
+            </DialogActions>
+        </Dialog>
     </>
 }
 let mapStateToProps = (state) => {

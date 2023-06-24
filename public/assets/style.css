@@ -177,8 +177,9 @@ button:focus {
 .mu-hero-left .mu-primary-btn:focus,
 .mu-single-counter i,
 .counter-value {
-	color: #ff871c;
+	color: #ca6702;
 }
+
 
 .mu-send-msg-btn:hover,
 .mu-send-msg-btn:focus,
@@ -188,7 +189,7 @@ button:focus {
 .mu-social-media a:focus,
 .mu-order-btn:hover,
 .mu-order-btn:focus {
-	color: #ff871c;
+	color: #ca6702;
 }
 
 
@@ -200,7 +201,7 @@ button:focus {
 .mu-author-social a,
 .mu-pricing-content .mu-popular-price-tag,
 #mu-video-review:before  {
-	background-color: #ff871c;
+	background-color: #ca6702;
 }
 
 

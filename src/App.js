@@ -1,15 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route,Routes } from 'react-router-dom';
-import NavBar from './index/components/navbar';
-import Index from './index/components';
-import Footer from './index/components/footer';
+import NavBar from './components/navbar';
+import Index from './components';
+import Footer from './components/footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import HomePage from './index/components/home';
-import EditBook from './index/components/editBook';
-import AuthorBooks from './index/components/authorBooks';
-import ViewBook from './index/components/viewBook';
+import HomePage from './components/home';
+import EditBook from './components/editBook';
+import AuthorBooks from './components/authorBooks';
+import ViewBook from './components/viewBook';
+import ErrorPage from './components/Error';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/editBook/:id' element={<EditBook/>}></Route>
         <Route path='/author_book' element={<AuthorBooks/>} />
         <Route path='/view_book/:id' element={<ViewBook/>} />
+        <Route path='*' element={<ErrorPage/>}/>
        </Routes>
        <Footer/>
     </BrowserRouter>

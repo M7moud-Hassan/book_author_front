@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { connect } from "react-redux";
-import * as actions from '../../actions/index'
+import * as actions from '../actions/index'
 import 'dropify/dist/css/dropify.min.css';
 import 'dropify/dist/js/dropify.min.js';
 import '../css/main.css'
@@ -55,7 +55,7 @@ function Index(props) {
 			"email": email,
 			"password": password,
 			"image": image,
-			"userType":typeUser
+			"userType": typeUser
 		}
 
 		props.SignUp(data);
@@ -127,22 +127,22 @@ function Index(props) {
 									)}
 								</Form.Group>
 								<div class="wrapper">
-									<input type="radio" name="select" id="option-1" checked={typeUser==0} />
-									<input type="radio" name="select" id="option-2"  checked={typeUser==1}/>
-									<label for="option-1" class="option option-1"  onClick={()=>{
+									<input type="radio" name="select" id="option-1" checked={typeUser == 0} />
+									<input type="radio" name="select" id="option-2" checked={typeUser == 1} />
+									<label for="option-1" class="option option-1" onClick={() => {
 										SetTypeUser(0)
 									}}>
 										<div class="dot"></div>
 										<div className='name_options'>Author</div>
 									</label>
-									<label for="option-2" class="option option-2" onClick={()=>{
+									<label for="option-2" class="option option-2" onClick={() => {
 										SetTypeUser(1)
 									}}>
 										<div class="dot"></div>
 										<div className='name_options'>Reader</div>
 									</label>
 								</div>
-								{typeUser==0?<Form.Group controlId="image" className='text-left'>
+								{typeUser == 0 ? <Form.Group controlId="image" className='text-left'>
 									<Form.Label>Image</Form.Label>
 									<input
 										type="file"
@@ -152,8 +152,8 @@ function Index(props) {
 										required
 									/>
 								</Form.Group>
-:<></>}
-								<Button variant="primary" type="submit" className='btn-submit'>
+									: <></>}
+								<Button variant="primary" type="submit" className='btn-submit btn-width'>
 									Register
 								</Button>
 							</Form>) : (<>
@@ -179,7 +179,7 @@ function Index(props) {
 											required
 										/>
 									</Form.Group>
-									<Button variant="primary" type="submit" className='btn-submit'>
+									<Button variant="primary" type="submit" className='btn-submit btn-width'>
 										Login
 									</Button>
 								</Form>
@@ -231,12 +231,12 @@ function Index(props) {
 										</div>
 
 										<div class="col-md-3 col-sm-6">
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-users" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count={props.index ? props.index.readers : 0}>0</div>
-                                                <h5 class="mu-counter-name">Readers</h5>
-                                            </div>
-                                        </div>
+											<div class="mu-single-counter">
+												<i class="fa fa-users" aria-hidden="true"></i>
+												<div class="counter-value" data-count={props.index ? props.index.readers : 0}>0</div>
+												<h5 class="mu-counter-name">Readers</h5>
+											</div>
+										</div>
 
 
 									</div>
@@ -249,7 +249,7 @@ function Index(props) {
 				</div>
 			</section>
 
-	
+
 
 			<section id="mu-Authors">
 				<div class="container">
