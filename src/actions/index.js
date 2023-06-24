@@ -3,13 +3,13 @@ import { toast } from 'react-toastify';
 const baseUrl = 'http://localhost:8000/'
 export function SignUp(data) {
     return async (dispatch) => {
-    axios.post(baseUrl + "auth/register", data,{
+    axios.post(baseUrl + "auth/register_reader", data,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
         .then(res => { 
-            localStorage.setItem('authorData', JSON.stringify(res.data));
+            localStorage.setItem('userData', JSON.stringify(res.data));
             toast.success('User registered successfully');
             window.location='/home'
         })
@@ -39,7 +39,8 @@ export function Login(data){
             }
           })
             .then(res => { 
-                localStorage.setItem('authorData', JSON.stringify(res.data));
+                console.log(res.data);
+                localStorage.setItem('userData', JSON.stringify(res.data));
                 toast.success('User login successfully');
                 window.location='/home'
             })
@@ -55,9 +56,8 @@ export function isTokenTxpired(data){
     return async (dispatch) => {
         axios.post(baseUrl + "auth/is_token_expired", data)
             .then(res => { 
-                console.log(res.data);
                if(res.data.expired){
-           localStorage.removeItem('authorData')
+                localStorage.removeItem('userData')
                 window.location='/'
                }
             })
@@ -67,7 +67,7 @@ export function isTokenTxpired(data){
         }
 }
 
-export function createBook(data){
+export function createBook(data,props){
     return async (dispatch) => {
     const headers = {
         Authorization: `Bearer ${data.accessToken}`,
@@ -78,8 +78,15 @@ export function createBook(data){
       .post(baseUrl+'/home/create_book/', data, { headers })
       .then((response) => {
         toast.success('Book created successfully')
+        var data2={
+            "currentPage":data.currentPage,
+            "id":data.author,
+            "accessToken": data.accessToken,
+        }
+        props.getBooksAuthor(data2);
       })
       .catch((error) => {
+        console.log(error);
        if(error.response.data.detail){
         toast.error(error.response.data.detail)
        }else{
@@ -95,11 +102,16 @@ export function getDetailsBook(data){
           axios
       .get(baseUrl+`/home/book_detail/${data.pk}/`)
       .then((response) => {
-
+        if(response.data.author.id!=data.id_author)
+        {
+            window.location='/'
+        }else{
+        
         dispatch({
             type: "BOOKDETAIL",
             payload: response.data
           });
+        }
       })
       .catch((error) => {
        if(error.response.data.detail){
@@ -109,6 +121,26 @@ export function getDetailsBook(data){
        }
       });
     }
+}
+
+export function getDetailsBookView(pk){
+    return async (dispatch) => {
+        axios
+    .get(baseUrl+`/home/book_detail_view/${pk}/`)
+    .then((response) => {
+      dispatch({
+          type: "BOOK",
+          payload: response.data
+        });
+    })
+    .catch((error) => {
+     if(error.response.data.detail){
+      toast.error(error.response.data.detail)
+     }else{
+      toast.error('error occur try again')
+     }
+    });
+  }
 }
 
 export function updateBook(data){
@@ -153,6 +185,41 @@ export function getBooks(currentPage){
 
 }
 
+export function getBooksAuthor(data){
+    return async (dispatch) => {
+        const headers = {
+            Authorization: `Bearer ${data.accessToken}`,
+            'Content-Type': 'multipart/form-data'
+          };
+        axios.get(baseUrl+`/home/book_list_author/${data.id}/?page=${data.currentPage}`,{headers}).then((response)=>{
+            dispatch({
+                type: "BOOKS",
+                payload: response.data
+              });
+        }).catch((error)=>{
+            console.log(error);
+            toast.error('error occur try again')
+        })
+    }
+
+}
+
+export function deleteBook(data,props){
+    return async (dispatch) => {
+        const headers = {
+            Authorization: `Bearer ${data.accessToken}`,
+            'Content-Type': 'multipart/form-data'
+          };
+        axios.delete(baseUrl+`/home/book_delete/${data.id_book}/`,{headers}).then((response)=>{
+            toast.success('Book deleted successfully')
+           props.getBooksAuthor(data)
+        }).catch((error)=>{
+            console.log(error);
+            toast.error('error occur try again')
+        })
+    }
+
+}
 export function getPages(currentPage,id_book){
     return async (dispatch) => {
         axios.get(baseUrl+`/home/page_list/${id_book}/?page=${currentPage}`).then((response)=>{
@@ -213,6 +280,35 @@ export function deletePage(data,props){
             props.getPages(data.cuurentPage,data.book)
         }).catch((error)=>{
             console.log(error);
+            toast.error('error occur try again')
+        })
+    }
+
+}
+
+
+export function getIndex(){
+    return async (dispatch) => {
+        axios.get(baseUrl+`/home/get_index/`).then((response)=>{
+            dispatch({
+                type: "INDEX",
+                payload: response.data
+              });
+        }).catch((error)=>{
+            console.log(error);
+            toast.error('error occur try again')
+        })   
+    }
+}
+
+export function getTopAuthors(){
+    return async (dispatch) => {
+        axios.get(baseUrl+`/auth/get_top_authors/`).then((response)=>{
+            dispatch({
+                type: "AUTHORS",
+                payload: response.data
+              });
+        }).catch((error)=>{
             toast.error('error occur try again')
         })
     }

@@ -7,6 +7,7 @@ import 'dropify/dist/css/dropify.min.css';
 import 'dropify/dist/js/dropify.min.js';
 import '../css/main.css'
 import $ from 'jquery';
+import CarouselAuthor from './carouselAuthor';
 function Index(props) {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
@@ -15,12 +16,13 @@ function Index(props) {
 	const [isPasswordValid, setIsPasswordValid] = useState(true);
 	const [isUsernameValid, setIsUsernameValid] = useState(true);
 	const imageInputRef = useRef(null);
+	const [typeUser, SetTypeUser] = useState(0);
 	const isLoginPage = window.location.pathname.includes('/login');
-	
-	const authorData = JSON.parse(localStorage.getItem('authorData'));
+	const userData = JSON.parse(localStorage.getItem('userData'));
+
 	useEffect(() => {
-		if(authorData){
-			window.location="/home"
+		if (userData) {
+			window.location = "/home"
 		}
 		if (imageInputRef.current && !isLoginPage) {
 			$(imageInputRef.current).dropify();
@@ -29,7 +31,9 @@ function Index(props) {
 
 			});
 		}
-	}, []);
+		props.getIndex()
+	}, [typeUser]);
+
 	const handleSubmitSignUp = (e) => {
 		e.preventDefault();
 		const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -50,7 +54,8 @@ function Index(props) {
 			"username": username,
 			"email": email,
 			"password": password,
-			"image": image
+			"image": image,
+			"userType":typeUser
 		}
 
 		props.SignUp(data);
@@ -59,19 +64,19 @@ function Index(props) {
 	const handleSubmitLogIn = (e) => {
 		e.preventDefault()
 		var data = {
-			"username":username,
-			"password":password
+			"username": username,
+			"password": password
 		}
 		props.Login(data)
 	}
-	return authorData?<></>: <>
+	return userData ? <></> : <>
 		<section id="mu-hero">
 			<div class="container">
 				<div class="row">
 
 					<div class="col-md-6 col-sm-6 col-sm-push-6">
 						<div class="mu-hero-right">
-							<img src="assets/images/ebook.png" alt="Ebook img" />
+							<img src='assets/images/ebook.gif' className='imageRigth' alt="Ebook img" />
 						</div>
 					</div>
 
@@ -121,8 +126,23 @@ function Index(props) {
 										</Form.Text>
 									)}
 								</Form.Group>
-
-								<Form.Group controlId="image" className='text-left'>
+								<div class="wrapper">
+									<input type="radio" name="select" id="option-1" checked={typeUser==0} />
+									<input type="radio" name="select" id="option-2"  checked={typeUser==1}/>
+									<label for="option-1" class="option option-1"  onClick={()=>{
+										SetTypeUser(0)
+									}}>
+										<div class="dot"></div>
+										<div className='name_options'>Author</div>
+									</label>
+									<label for="option-2" class="option option-2" onClick={()=>{
+										SetTypeUser(1)
+									}}>
+										<div class="dot"></div>
+										<div className='name_options'>Reader</div>
+									</label>
+								</div>
+								{typeUser==0?<Form.Group controlId="image" className='text-left'>
 									<Form.Label>Image</Form.Label>
 									<input
 										type="file"
@@ -132,7 +152,7 @@ function Index(props) {
 										required
 									/>
 								</Form.Group>
-
+:<></>}
 								<Button variant="primary" type="submit" className='btn-submit'>
 									Register
 								</Button>
@@ -182,41 +202,41 @@ function Index(props) {
 						<div class="col-md-12">
 							<div class="mu-counter-area">
 
-								<div class="mu-counter-block">
-									<div class="row">
+								<div class="mu-counter-block containerC">
+									<div class="row rowC">
 
 
-										<div class="col-md-3 col-sm-6">
+										<div class="col-md-3 col-sm-6" >
 											<div class="mu-single-counter">
 												<i class="fa fa-files-o" aria-hidden="true"></i>
-												<div class="counter-value" data-count="650">0</div>
+												<div class="counter-value" data-count={props.index ? props.index.pages : 0}>0</div>
 												<h5 class="mu-counter-name">Total Pages</h5>
 											</div>
 										</div>
 
-										<div class="col-md-3 col-sm-6">
+										<div class="col-md-3 col-sm-6" >
 											<div class="mu-single-counter">
 												<i class="fa fa-file-text-o" aria-hidden="true"></i>
-												<div class="counter-value" data-count="422">0</div>
-												<h5 class="mu-counter-name">Chapters</h5>
+												<div class="counter-value" data-count={props.index ? props.index.books : 0}>0</div>
+												<h5 class="mu-counter-name">Books</h5>
 											</div>
 										</div>
 
 										<div class="col-md-3 col-sm-6">
 											<div class="mu-single-counter">
 												<i class="fa fa-users" aria-hidden="true"></i>
-												<div class="counter-value" data-count="1055">0</div>
-												<h5 class="mu-counter-name">Active Readers</h5>
+												<div class="counter-value" data-count={props.index ? props.index.authors : 0}>0</div>
+												<h5 class="mu-counter-name">Authors</h5>
 											</div>
 										</div>
 
 										<div class="col-md-3 col-sm-6">
-											<div class="mu-single-counter">
-												<i class="fa fa-trophy" aria-hidden="true"></i>
-												<div class="counter-value" data-count="03">0</div>
-												<h5 class="mu-counter-name">Got Awards</h5>
-											</div>
-										</div>
+                                            <div class="mu-single-counter">
+                                                <i class="fa fa-users" aria-hidden="true"></i>
+                                                <div class="counter-value" data-count={props.index ? props.index.readers : 0}>0</div>
+                                                <h5 class="mu-counter-name">Readers</h5>
+                                            </div>
+                                        </div>
 
 
 									</div>
@@ -229,149 +249,20 @@ function Index(props) {
 				</div>
 			</section>
 
-			<section id="mu-book-overview">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="mu-book-overview-area">
+	
 
-								<div class="mu-heading-area">
-									<h2 class="mu-heading-title">Book Overview</h2>
-									<span class="mu-header-dot"></span>
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever</p>
-								</div>
-
-
-								<div class="mu-book-overview-content">
-									<div class="row">
-
-
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-book-overview-single">
-												<span class="mu-book-overview-icon-box">
-													<i class="fa fa-area-chart" aria-hidden="true"></i>
-												</span>
-												<h4>Chapter One</h4>
-												<p>Lorem ipsum dolor sit amet, consect adipis elit minim veniam ettis inkeras.</p>
-											</div>
-										</div>
-
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-book-overview-single">
-												<span class="mu-book-overview-icon-box">
-													<i class="fa fa-cubes" aria-hidden="true"></i>
-												</span>
-												<h4>Chapter Two</h4>
-												<p>Lorem ipsum dolor sit amet, consect adipis elit minim veniam ettis inkeras.</p>
-											</div>
-										</div>
-
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-book-overview-single">
-												<span class="mu-book-overview-icon-box">
-													<i class="fa fa-modx" aria-hidden="true"></i>
-												</span>
-												<h4>Chapter Three</h4>
-												<p>Lorem ipsum dolor sit amet, consect adipis elit minim veniam ettis inkeras.</p>
-											</div>
-										</div>
-
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-book-overview-single">
-												<span class="mu-book-overview-icon-box">
-													<i class="fa fa-files-o" aria-hidden="true"></i>
-												</span>
-												<h4>Chapter Four</h4>
-												<p>Lorem ipsum dolor sit amet, consect adipis elit minim veniam ettis inkeras.</p>
-											</div>
-										</div>
-
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-book-overview-single">
-												<span class="mu-book-overview-icon-box">
-													<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-												</span>
-												<h4>Chapter Five</h4>
-												<p>Lorem ipsum dolor sit amet, consect adipis elit minim veniam ettis inkeras.</p>
-											</div>
-										</div>
-
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-book-overview-single">
-												<span class="mu-book-overview-icon-box">
-													<i class="fa fa-language" aria-hidden="true"></i>
-												</span>
-												<h4>Chapter Six</h4>
-												<p>Lorem ipsum dolor sit amet, consect adipis elit minim veniam ettis inkeras.</p>
-											</div>
-										</div>
-
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-book-overview-single">
-												<span class="mu-book-overview-icon-box">
-													<i class="fa fa-gg" aria-hidden="true"></i>
-												</span>
-												<h4>Chapter Seven</h4>
-												<p>Lorem ipsum dolor sit amet, consect adipis elit minim veniam ettis inkeras.</p>
-											</div>
-										</div>
-
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-book-overview-single">
-												<span class="mu-book-overview-icon-box">
-													<i class="fa fa-wpforms" aria-hidden="true"></i>
-												</span>
-												<h4>Chapter Eight</h4>
-												<p>Lorem ipsum dolor sit amet, consect adipis elit minim veniam ettis inkeras.</p>
-											</div>
-										</div>
-
-
-									</div>
-								</div>
-
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section id="mu-testimonials">
+			<section id="mu-Authors">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="mu-testimonials-area">
 								<div class="mu-heading-area">
-									<h2 class="mu-heading-title">What Our Readers Says</h2>
+									<h2 class="mu-heading-title">Top Authors</h2>
 									<span class="mu-header-dot"></span>
 								</div>
 
 								<div class="mu-testimonials-block">
-									<ul class="mu-testimonial-slide">
-
-										<li>
-											<p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever."</p>
-											<img class="mu-rt-img" src="assets/images/reader-1.jpg" alt="img" />
-											<h5 class="mu-rt-name"> - Alice Boga</h5>
-											<span class="mu-rt-title">CEO, Apple Inc.</span>
-										</li>
-
-										<li>
-											<p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever."</p>
-											<img class="mu-rt-img" src="assets/images/reader-2.jpg" alt="img" />
-											<h5 class="mu-rt-name"> - Jhon Doe</h5>
-											<span class="mu-rt-title">Director, Google Inc.</span>
-										</li>
-
-										<li>
-											<p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever."</p>
-											<img class="mu-rt-img" src="assets/images/reader-3.jpg" alt="img" />
-											<h5 class="mu-rt-name"> - Jessica Doe</h5>
-											<span class="mu-rt-title">Web Developer</span>
-										</li>
-
-									</ul>
+									<CarouselAuthor />
 								</div>
 
 
@@ -385,11 +276,17 @@ function Index(props) {
 	</>
 }
 
+
+
 let mapStateToProps = (state) => {
 	// console.log(state)
 	return {
-		result: state.result
+		result: state.result,
+		index: state.index,
+		authors: state.authors
 	};
 };
+
+
 
 export default connect(mapStateToProps, actions)(Index);

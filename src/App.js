@@ -8,6 +8,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomePage from './index/components/home';
 import EditBook from './index/components/editBook';
+import AuthorBooks from './index/components/authorBooks';
+import ViewBook from './index/components/viewBook';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path='/login' element={<Index/>}></Route>
         <Route path='/home' element={<HomePage/>}></Route>
         <Route path='/editBook/:id' element={<EditBook/>}></Route>
+        <Route path='/author_book' element={<AuthorBooks/>} />
+        <Route path='/view_book/:id' element={<ViewBook/>} />
        </Routes>
        <Footer/>
     </BrowserRouter>

@@ -27,7 +27,7 @@ function EditBook(props) {
     const [numPage, setNumPage] = useState(1);
     const [idPage, setIdPage] = useState(-1);
     const [openDelete, setOpenDelete] = useState(false);
-    const authorData = JSON.parse(localStorage.getItem('authorData'));
+    const authorData = JSON.parse(localStorage.getItem('userData'));
 
 
 
@@ -112,8 +112,10 @@ function EditBook(props) {
         } else {
             window.location = '/'
         }
+        
         var data = {
-            pk: id
+            pk: id,
+            "id_author":authorData.user.id
         }
         props.getDetailsBook(data)
         props.getPages(currentPage, id)
@@ -182,12 +184,12 @@ function EditBook(props) {
                     </div>
 
                     <div class="col-md-6 col-sm-6 col-sm-pull-6">
-                        {props.bookDetails.author == authorData.user.id ? <div class="mu-hero-left">
-                            <h1>Perfect Landing Page Template to Present Your eBook</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam saepe, recusandae quidem nulla! Eveniet explicabo perferendis aut, ab quos omnis labore laboriosam quisquam hic deserunt ipsum maxime aspernatur velit impedit.</p>
-                            <a onClick={openDialogBox} class="mu-primary-btn">Download Now!</a>
-                            <span>*Avaliable in PDF, ePUB, Mobi & Kindle.</span>
-                        </div> : <></>}
+                         <div class="mu-hero-left">
+                            <h1>use can edit book or add some pages to it</h1>
+                            <p>you can edit name or photo of book from this button</p>
+                            <a onClick={openDialogBox} class="mu-primary-btn">edit book</a>
+                           
+                        </div> 
                     </div>
 
                 </div>
@@ -196,61 +198,6 @@ function EditBook(props) {
 
 
         <main role="main">
-
-
-            <section id="mu-counter">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mu-counter-area">
-
-                                <div class="mu-counter-block">
-                                    <div class="row">
-
-
-                                        <div class="col-md-3 col-sm-6">
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-files-o" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count="650">0</div>
-                                                <h5 class="mu-counter-name">Total Pages</h5>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6">
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count="422">0</div>
-                                                <h5 class="mu-counter-name">Chapters</h5>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6">
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-users" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count="1055">0</div>
-                                                <h5 class="mu-counter-name">Active Readers</h5>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6">
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-trophy" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count="03">0</div>
-                                                <h5 class="mu-counter-name">Got Awards</h5>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <section id="mu-book-overview">
                 <div class="container">
                     <div class="row">
@@ -258,7 +205,7 @@ function EditBook(props) {
                             <div class="mu-book-overview-area">
 
                                 <div class="mu-heading-area">
-                                    <h2 class="mu-heading-title">Book Overview</h2>
+                                    <h2 class="mu-heading-title">Pages of {props.bookDetails.title}</h2>
                                     <span class="mu-header-dot"></span>
                                     <div>
                                     <button type="button" class="btn btn-primary" onClick={()=>{

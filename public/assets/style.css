@@ -188,7 +188,6 @@ button:focus {
 .mu-social-media a:focus,
 .mu-order-btn:hover,
 .mu-order-btn:focus {
-	border: 1px solid #ff871c;
 	color: #ff871c;
 }
 
@@ -339,6 +338,10 @@ button:focus {
 
 @media (max-width: 640px){
 
+	.mu-single-counter i{
+		margin-top: 0 !important;
+	}
+
 	#mu-header.mu-fixed-nav {
 		padding: 10px 0;
 	}
@@ -367,6 +370,9 @@ button:focus {
 
 @media (max-width: 480px) {
 
+	.mu-single-counter i{
+		margin-top: 0 !important;
+	}
 	.navbar-brand img {
 		width: 150px;
 	}
@@ -428,6 +434,9 @@ button:focus {
 
 	.mu-featured-slider-content {
 		top: 49%;
+	}
+	.mu-single-counter i{
+		margin-top: 0 !important;
 	}
 
 	.mu-featured-slider-content p,
