@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import '../css/main.css'
+import '../../css/main.css'
 import { Editor } from "@tinymce/tinymce-react";
 import { connect } from 'react-redux';
-import * as actions from '../actions/index'
+import * as actions from '../../actions/index'
 import { useParams } from 'react-router-dom';
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import styles from '../css/home.module.css';
+import styles from '../../css/home.module.css';
 import 'dropify/dist/css/dropify.min.css';
 import 'dropify/dist/js/dropify.min.js';
 import { Form, Button } from 'react-bootstrap';
@@ -171,11 +171,11 @@ function EditBook(props) {
     };
     return authorData && props.bookDetails ? <>
         <section id="mu-hero">
-            <div class="container">
-                <div class="row">
+            <div className="container">
+                <div className="row">
 
-                    <div class="col-md-6 col-sm-6 col-sm-push-6">
-                        <div class="mu-hero-right">
+                    <div className="col-md-6 col-sm-6 col-sm-push-6">
+                        <div className="mu-hero-right">
                             <img src={`http://localhost:8000${props.bookDetails.image}`} alt="Ebook img" style={{
                                 width: '100%',
                                 height: '300px'
@@ -183,11 +183,11 @@ function EditBook(props) {
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-sm-6 col-sm-pull-6">
-                        <div class="mu-hero-left">
+                    <div className="col-md-6 col-sm-6 col-sm-pull-6">
+                        <div className="mu-hero-left">
                             <h1>use can edit book or add some pages to it</h1>
                             <p>you can edit name or photo of book from this button</p>
-                            <a onClick={openDialogBox} class="mu-primary-btn">edit book</a>
+                            <a onClick={openDialogBox} className="mu-primary-btn">edit book</a>
 
                         </div>
                     </div>
@@ -199,16 +199,16 @@ function EditBook(props) {
 
         <main role="main">
             <section id="mu-book-overview">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mu-book-overview-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="mu-book-overview-area">
 
-                                <div class="mu-heading-area">
-                                    <h2 class="mu-heading-title">Pages of {props.bookDetails.title}</h2>
-                                    <span class="mu-header-dot"></span>
+                                <div className="mu-heading-area">
+                                    <h2 className="mu-heading-title">Pages of {props.bookDetails.title}</h2>
+                                    <span className="mu-header-dot"></span>
                                     <div>
-                                        <button type="button" class="btn btn-primary" onClick={() => {
+                                        <button type="button" className="btn btn-primary" onClick={() => {
                                             setNumPage(props.pages.results ? props.pages.results.length + 1 : 0)
                                             setContent('')
                                             openDialogBoxPage()
@@ -220,24 +220,24 @@ function EditBook(props) {
                                 </div>
 
 
-                                <div class="mu-book-overview-content">
-                                    <div class="row">
+                                <div className="mu-book-overview-content">
+                                    <div className="row">
                                         {props.pages.results ? props.pages.results.map(ele => {
-                                            return <div class="col-md-3 col-sm-6">
-                                                <div class="mu-book-overview-single">
-                                                    <span class="mu-book-overview-icon-box">
-                                                        <i class="fa fa-wpforms" aria-hidden="true"></i>
+                                            return <div className="col-md-3 col-sm-6">
+                                                <div className="mu-book-overview-single">
+                                                    <span className="mu-book-overview-icon-box">
+                                                        <i className="fa fa-wpforms" aria-hidden="true"></i>
                                                     </span>
                                                     <h4>Page {ele.number}</h4>
                                                     <div>
-                                                        <i class="fa fa-trash fa-icon-delete" onClick={
+                                                        <i className="fa fa-trash fa-icon-delete" onClick={
                                                             () => {
                                                                 setNumPage(ele.number)
                                                                 setIdPage(ele.id)
                                                                 handleDelete()
                                                             }
                                                         } aria-hidden="true"></i>
-                                                        <i class="fas fa-edit fa-icon-edit" onClick={() => {
+                                                        <i className="fas fa-edit fa-icon-edit" onClick={() => {
                                                             setNumPage(ele.number)
                                                             setIdPage(ele.id)
                                                             setContent(ele.content)

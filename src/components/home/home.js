@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
-import * as actions from '../actions/index'
+import * as actions from '../../actions/index'
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import styles from '../css/home.module.css';
+import styles from '../../css/home.module.css';
 import 'dropify/dist/css/dropify.min.css';
 import 'dropify/dist/js/dropify.min.js';
 import { Form, Button } from 'react-bootstrap';
 import $ from 'jquery';
 import { Pagination } from '@mui/material';
-import CarouselAuthor from "./carouselAuthor";
+import CarouselAuthor from "../index/carouselAuthor";
 import { NavLink } from "react-router-dom";
 
 
@@ -85,33 +85,33 @@ function HomePage(props) {
 
     return <>
         <section id="mu-hero">
-            <div class="container">
-                <div class="row">
+            <div className="container">
+                <div className="row">
 
                     {userData.group == 'Authors' ? (<>
-                        <div class="col-md-6 col-sm-6 col-sm-push-6">
-                            <div class="mu-hero-right">
+                        <div className="col-md-6 col-sm-6 col-sm-push-6">
+                            <div className="mu-hero-right">
                                 <img src={`http://localhost:8000${userData.user.image}`} className="imageRigth" alt="Ebook img" />
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-sm-6 col-sm-pull-6">
-                            <div class="mu-hero-left">
+                        <div className="col-md-6 col-sm-6 col-sm-pull-6">
+                            <div className="mu-hero-left">
                                 <h1>Wellcome {userData.username} in Home Page</h1>
                                 <p>From this Home Page Can you Create Book Or Edit Book and manage yout pages</p>
-                                <a onClick={openDialogBox} class="mu-primary-btn">Create Book</a>
+                                <a onClick={openDialogBox} className="mu-primary-btn">Create Book</a>
                             </div>
                         </div></>) : <>
-                        <div class="row">
+                        <div className="row">
 
-                            <div class="col-md-6 col-sm-6 col-sm-push-6">
-                                <div class="mu-hero-right">
+                            <div className="col-md-6 col-sm-6 col-sm-push-6">
+                                <div className="mu-hero-right">
                                     <img src='assets/images/ebook.gif' className='imageRigth' alt="Ebook img" />
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-sm-6 col-sm-pull-6">
-                                <div class="mu-hero-left">
+                            <div className="col-md-6 col-sm-6 col-sm-pull-6">
+                                <div className="mu-hero-left">
                                     <h1>you can browse the books  and if you want to add your Books
                                         create account as Author
                                     </h1>
@@ -129,44 +129,44 @@ function HomePage(props) {
 
 
             <section id="mu-counter">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mu-counter-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="mu-counter-area">
 
-                                <div class="mu-counter-block containerC">
-                                    <div class="row rowC">
+                                <div className="mu-counter-block containerC">
+                                    <div className="row rowC">
 
 
-                                        <div class="col-md-3 col-sm-6" >
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-files-o" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count={props.index ? props.index.pages : 0}>0</div>
-                                                <h5 class="mu-counter-name">Total Pages</h5>
+                                        <div className="col-md-3 col-sm-6" >
+                                            <div className="mu-single-counter">
+                                                <i className="fa fa-files-o" aria-hidden="true"></i>
+                                                <div className="counter-value" data-count={props.index ? props.index.pages : 0}>0</div>
+                                                <h5 className="mu-counter-name">Total Pages</h5>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3 col-sm-6" >
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count={props.index ? props.index.books : 0}>0</div>
-                                                <h5 class="mu-counter-name">Books</h5>
+                                        <div className="col-md-3 col-sm-6" >
+                                            <div className="mu-single-counter">
+                                                <i className="fa fa-file-text-o" aria-hidden="true"></i>
+                                                <div className="counter-value" data-count={props.index ? props.index.books : 0}>0</div>
+                                                <h5 className="mu-counter-name">Books</h5>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3 col-sm-6">
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-users" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count={props.index ? props.index.authors : 0}>0</div>
-                                                <h5 class="mu-counter-name">Authors</h5>
+                                        <div className="col-md-3 col-sm-6">
+                                            <div className="mu-single-counter">
+                                                <i className="fa fa-users" aria-hidden="true"></i>
+                                                <div className="counter-value" data-count={props.index ? props.index.authors : 0}>0</div>
+                                                <h5 className="mu-counter-name">Authors</h5>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3 col-sm-6">
-                                            <div class="mu-single-counter">
-                                                <i class="fa fa-users" aria-hidden="true"></i>
-                                                <div class="counter-value" data-count={props.index ? props.index.readers : 0}>0</div>
-                                                <h5 class="mu-counter-name">Readers</h5>
+                                        <div className="col-md-3 col-sm-6">
+                                            <div className="mu-single-counter">
+                                                <i className="fa fa-users" aria-hidden="true"></i>
+                                                <div className="counter-value" data-count={props.index ? props.index.readers : 0}>0</div>
+                                                <h5 className="mu-counter-name">Readers</h5>
                                             </div>
                                         </div>
 
@@ -184,18 +184,18 @@ function HomePage(props) {
 
 
             <section id="mu-book-overview">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mu-book-overview-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="mu-book-overview-area">
 
-                                <div class="mu-heading-area">
-                                    <h2 class="mu-heading-title">Book Overview</h2>
+                                <div className="mu-heading-area">
+                                    <h2 className="mu-heading-title">Book Overview</h2>
                                 </div>
 
 
-                                <div class="mu-book-overview-content">
-                                    <div class="row">
+                                <div className="mu-book-overview-content">
+                                    <div className="row">
 
                                         {props.books.results ? props.books.results.map((ele) => {
                                             console.log(ele);
@@ -204,9 +204,9 @@ function HomePage(props) {
                                                     window.location = `/view_book/${ele.id}`;
                                                 }
                                             }>
-                                                <div class="col-md-3 col-sm-6">
-                                                    <div class="mu-book-overview-single">
-                                                        <span class="mu-book-overview-icon-box">
+                                                <div className="col-md-3 col-sm-6">
+                                                    <div className="mu-book-overview-single">
+                                                        <span className="mu-book-overview-icon-box">
                                                             <img src={"http://localhost:8000" + ele.image} style={{
                                                                 height: "200px"
                                                             }} />
@@ -240,16 +240,16 @@ function HomePage(props) {
             </section>
 
             <section id="mu-Authors">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mu-testimonials-area">
-                                <div class="mu-heading-area">
-                                    <h2 class="mu-heading-title">Top Authors</h2>
-                                    <span class="mu-header-dot"></span>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="mu-testimonials-area">
+                                <div className="mu-heading-area">
+                                    <h2 className="mu-heading-title">Top Authors</h2>
+                                    <span className="mu-header-dot"></span>
                                 </div>
 
-                                <div class="mu-testimonials-block">
+                                <div className="mu-testimonials-block">
                                     <CarouselAuthor />
                                 </div>
 

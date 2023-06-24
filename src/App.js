@@ -1,16 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route,Routes } from 'react-router-dom';
-import NavBar from './components/navbar';
-import Index from './components';
-import Footer from './components/footer';
+import Index from './components/index';
+import Footer from './components/index/footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import HomePage from './components/home';
-import EditBook from './components/editBook';
-import AuthorBooks from './components/authorBooks';
-import ViewBook from './components/viewBook';
-import ErrorPage from './components/Error';
+import HomePage from './components/home/home';
+import EditBook from './components/author_op/editBook';
+import AuthorBooks from './components/author_op/authorBooks';
+import ViewBook from './components/home/viewBook';
+import ErrorPage from './components/index/Error';
+import NavBar from './components/index/navbar'
 
 function App() {
   return (

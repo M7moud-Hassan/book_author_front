@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
-import * as actions from '../actions/index'
+import * as actions from '../../actions/index'
 import { useEffect, useRef, useState } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import { Form, Button } from 'react-bootstrap';
 import $ from 'jquery';
-import styles from '../css/home.module.css';
+import styles from '../../css/home.module.css';
 import { Pagination } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -107,21 +107,21 @@ function AuthorBooks(props) {
 
     return <>
         <section id="mu-hero">
-            <div class="container">
-                <div class="row">
+            <div className="container">
+                <div className="row">
 
                     {userData.group == 'Authors' ? (<>
-                        <div class="col-md-6 col-sm-6 col-sm-push-6">
-                            <div class="mu-hero-right">
+                        <div className="col-md-6 col-sm-6 col-sm-push-6">
+                            <div className="mu-hero-right">
                                 <img src={`http://localhost:8000${userData.user.image}`} className="imageRigth" alt="Ebook img" />
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-sm-6 col-sm-pull-6">
-                            <div class="mu-hero-left">
+                        <div className="col-md-6 col-sm-6 col-sm-pull-6">
+                            <div className="mu-hero-left">
                                 <h1>Wellcome {userData.username} in  Page of Your Books add Book Now</h1>
                                 <p>From this Home Page Can you Create Book Or Edit Book and manage yout pages</p>
-                                <a onClick={openDialogBox} class="mu-primary-btn">Create Book</a>
+                                <a onClick={openDialogBox} className="mu-primary-btn">Create Book</a>
                             </div>
                         </div></>) : <></>}
 
@@ -130,24 +130,24 @@ function AuthorBooks(props) {
         </section>
         <main role="main">
             <section id="mu-book-overview">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mu-book-overview-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="mu-book-overview-area">
 
-                                <div class="mu-heading-area">
-                                    <h2 class="mu-heading-title">Your Books</h2>
-                                    <span class="mu-header-dot"></span>
+                                <div className="mu-heading-area">
+                                    <h2 className="mu-heading-title">Your Books</h2>
+                                    <span className="mu-header-dot"></span>
                                 </div>
 
 
-                                <div class="mu-book-overview-content">
-                                    <div class="row">
+                                <div className="mu-book-overview-content">
+                                    <div className="row">
                                         {props.books.results ? props.books.results.map((ele) => {
-                                            return <div class="col-md-3 col-sm-6">
-                                                <div class="mu-book-overview-single">
+                                            return <div className="col-md-3 col-sm-6">
+                                                <div className="mu-book-overview-single">
                                                     <NavLink to={`/view_book/${ele.id}`}>
-                                                        <span class="mu-book-overview-icon-box">
+                                                        <span className="mu-book-overview-icon-box">
                                                             <img src={"http://localhost:8000" + ele.image} style={{
                                                                 height: "200px"
                                                             }} />
@@ -155,14 +155,14 @@ function AuthorBooks(props) {
                                                     </NavLink>
                                                     <h4>{ele.title}</h4>
                                                     <div>
-                                                        <i class="fa fa-trash fa-icon-delete" onClick={
+                                                        <i className="fa fa-trash fa-icon-delete" onClick={
                                                             () => {
                                                                 SetIdBook(ele.id)
                                                                 setTitleBook(ele.title)
                                                                 handleDelete()
                                                             }
                                                         } aria-hidden="true"></i>
-                                                        <i class="fas fa-edit fa-icon-edit" onClick={() => {
+                                                        <i className="fas fa-edit fa-icon-edit" onClick={() => {
                                                             window.location = "/editBook/" + ele.id
                                                         }}></i>
                                                     </div>

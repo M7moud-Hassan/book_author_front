@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import '../css/book_view.css'
+import '../../css/book_view.css'
 import { connect } from "react-redux";
-import * as actions from '../actions/index'
+import * as actions from '../../actions/index'
 
 function ViewBook(props) {
     const { id } = useParams()
@@ -43,18 +43,18 @@ function ViewBook(props) {
     return <>
         <style>{generatedStyles}</style>
         <section id="mu-hero">
-            <div class="container">
-                <div class="row">
+            <div className="container">
+                <div className="row">
 
                     <>
-                        <div class="col-md-6 col-sm-6 col-sm-push-6">
-                            <div class="mu-hero-right">
+                        <div className="col-md-6 col-sm-6 col-sm-push-6">
+                            <div className="mu-hero-right">
                                 <img src={`http://localhost:8000${props.book ? props.book.image : ''}`} className="imageRigth" alt="Ebook img" />
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-sm-6 col-sm-pull-6">
-                            <div class="mu-hero-left">
+                        <div className="col-md-6 col-sm-6 col-sm-pull-6">
+                            <div className="mu-hero-left">
                                 {props.book.author ? (<>
                                     <h1><span className="suptitle">author :</span> {props.book.author.username}</h1>
                                     <h1> <span className="suptitle">title :</span> {props.book.title}</h1>
@@ -70,35 +70,40 @@ function ViewBook(props) {
         <main role="main">
             <section id="mu-counter">
                 <div className="container-book">
-                    {props.book.pages ? <div class="book">
+                    {props.book.pages ? <div className="book">
                         {props.book.pages.map((ele, index) => {
                             return <input type="checkbox" id={`c${index + 1}`} />
                         })}
 
                         <div id="cover"></div>
-                        <div class="flip-book">
+                        <div className="flip-book">
 
                             {props.book.pages.map((ele, index) => {
                                 if (index == 0 && props.book.pages.length == 1) {
 
                                     return <>
-                                        <div class="flip" id="p1">
-                                            <div class="back">
+                                        <div className="flip" id="p1">
+                                            <div className="back">
 
                                                 <div className="pages-style" dangerouslySetInnerHTML={{ __html: ele.content }}></div>
-                                                <label class="back-btn" for="c1">Back</label>
+                                                <label className="back-btn" for="c1">Back</label>
                                             </div>
-                                            <div className="pageS front">
+                                            <div className="pageS front" style={{
+                                                    height: '100%',
+                                                    width: '100%',
+                                                    background: '#005f73',
+                                                    color: 'white'
+                                                }}>
                                                 <img src={`http://localhost:8000${props.book.image}`} alt="Chessboard white" />
                                                 <h1 className="titlebook">{props.book.title}</h1>
-                                                <label class="next-btn" for="c1" style={{
+                                                <label className="next-btn" for="c1" style={{
                                                     color: 'white',
                                                     border: '1px solid white'
                                                 }}>Open</label>
                                             </div>
                                         </div>
-                                        <div class="flip" id={`p2`}>
-                                            <div class="front" style={{
+                                        <div className="flip" id={`p2`}>
+                                            <div className="front" style={{
                                                 color: 'white',
                                                 background: '#005f73'
                                             }}
@@ -113,13 +118,13 @@ function ViewBook(props) {
                                     if (index == 0) {
 
                                         return <>
-                                            <div class="flip" id="p1">
-                                                <div class="back">
+                                            <div className="flip" id="p1">
+                                                <div className="back">
 
                                                     <div className="pages-style" dangerouslySetInnerHTML={{ __html: ele.content }}></div>
-                                                    <label class="back-btn" for="c1">Back</label>
+                                                    <label className="back-btn" for="c1">Back</label>
                                                 </div>
-                                                <div class="front" style={{
+                                                <div className="front" style={{
                                                     height: '100%',
                                                     width: '100%',
                                                     background: '#005f73',
@@ -127,7 +132,7 @@ function ViewBook(props) {
                                                 }}>
                                                     <img src={`http://localhost:8000${props.book.image}`} alt="Chessboard white" />
                                                     <h1 className="titlebook">{props.book.title}</h1>
-                                                    <label class="next-btn" for="c1" style={{
+                                                    <label className="next-btn" for="c1" style={{
                                                         color: 'white',
                                                         border: '1px solid white'
                                                     }}>Open</label>
@@ -136,16 +141,16 @@ function ViewBook(props) {
                                         </>
                                     } else if (index % 2 != 0 && index != props.book.pages.length - 1) {
                                         return <>
-                                            <div class="flip" id={`p${Math.ceil((ele.number + 1) / 2)}`}>
-                                                <div class="back">
+                                            <div className="flip" id={`p${Math.ceil((ele.number + 1) / 2)}`}>
+                                                <div className="back">
                                                     <div className="pages-style" dangerouslySetInnerHTML={{ __html: props.book.pages[index + 1].content }}></div>
 
-                                                    <label class="back-btn" for={`c${Math.ceil((ele.number + 1) / 2)}`}>Back</label>
+                                                    <label className="back-btn" for={`c${Math.ceil((ele.number + 1) / 2)}`}>Back</label>
                                                 </div>
-                                                <div class="front">
+                                                <div className="front">
                                                     <div className="pages-style" dangerouslySetInnerHTML={{ __html: ele.content }}></div>
 
-                                                    <label class="next-btn" for={`c${Math.ceil((ele.number + 1) / 2)}`}>Next</label>
+                                                    <label className="next-btn" for={`c${Math.ceil((ele.number + 1) / 2)}`}>Next</label>
                                                 </div>
                                             </div>
                                         </>
@@ -153,34 +158,34 @@ function ViewBook(props) {
                                 if (index == props.book.pages.length - 1 && index % 2 != 0) {
 
                                     return <>
-                                        <div class="flip" id={`p${(props.book.pages.length + 2) / 2}`}>
-                                            <div class="back" style={{
+                                        <div className="flip" id={`p${(props.book.pages.length + 2) / 2}`}>
+                                            <div className="back" style={{
                                                 color: 'white',
                                                 background: '#005f73',
 
                                             }}
                                             >
                                                 End of the book
-                                                <label class="back-btn" for={`c${(props.book.pages.length + 2) / 2}`} style={{
+                                                <label className="back-btn" for={`c${(props.book.pages.length + 2) / 2}`} style={{
                                                     color: 'white',
                                                     border: '1px solid white'
                                                 }}
                                                 >Back</label>
                                             </div>
-                                            <div class="front" style={{
+                                            <div className="front" style={{
                                                 height: '100%',
                                                 width: '100%'
                                             }}
                                             >
                                                 <div className="pages-style" dangerouslySetInnerHTML={{ __html: ele.content }}></div>
-                                                <label class="next-btn" for={`c${(props.book.pages.length + 2) / 2}`}>Next</label>
+                                                <label className="next-btn" for={`c${(props.book.pages.length + 2) / 2}`}>Next</label>
                                             </div>
                                         </div>
                                     </>
                                 } else if (index == props.book.pages.length - 1 && index % 2 == 0) {
                                     return <>
-                                        <div class="flip" id={`p${(props.book.pages.length + 2) / 2}`}>
-                                            <div class="front" style={{
+                                        <div className="flip" id={`p${(props.book.pages.length + 2) / 2}`}>
+                                            <div className="front" style={{
                                                 color: 'white',
                                                 background: '#005f73'
                                             }}

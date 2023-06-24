@@ -2,12 +2,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { connect } from "react-redux";
-import * as actions from '../actions/index'
+import * as actions from '../../actions/index'
 import 'dropify/dist/css/dropify.min.css';
 import 'dropify/dist/js/dropify.min.js';
-import '../css/main.css'
+import '../../css/main.css'
 import $ from 'jquery';
-import CarouselAuthor from './carouselAuthor';
+import CarouselAuthor from '../index/carouselAuthor';
 function Index(props) {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
@@ -71,17 +71,17 @@ function Index(props) {
 	}
 	return userData ? <></> : <>
 		<section id="mu-hero">
-			<div class="container">
-				<div class="row">
+			<div className="container">
+				<div className="row">
 
-					<div class="col-md-6 col-sm-6 col-sm-push-6">
-						<div class="mu-hero-right">
+					<div className="col-md-6 col-sm-6 col-sm-push-6">
+						<div className="mu-hero-right">
 							<img src='assets/images/ebook.gif' className='imageRigth' alt="Ebook img" />
 						</div>
 					</div>
 
-					<div class="col-md-6 col-sm-6 col-sm-pull-6">
-						<div class="mu-hero-left">
+					<div className="col-md-6 col-sm-6 col-sm-pull-6">
+						<div className="mu-hero-left">
 
 							{!isLoginPage ? (<Form onSubmit={handleSubmitSignUp} className="text-center" enctype="multipart/form-data">
 								<Form.Group controlId="username" className='text-left'>
@@ -126,19 +126,19 @@ function Index(props) {
 										</Form.Text>
 									)}
 								</Form.Group>
-								<div class="wrapper">
+								<div className="wrapper">
 									<input type="radio" name="select" id="option-1" checked={typeUser == 0} />
 									<input type="radio" name="select" id="option-2" checked={typeUser == 1} />
-									<label for="option-1" class="option option-1" onClick={() => {
+									<label for="option-1" className="option option-1" onClick={() => {
 										SetTypeUser(0)
 									}}>
-										<div class="dot"></div>
+										<div className="dot"></div>
 										<div className='name_options'>Author</div>
 									</label>
-									<label for="option-2" class="option option-2" onClick={() => {
+									<label for="option-2" className="option option-2" onClick={() => {
 										SetTypeUser(1)
 									}}>
-										<div class="dot"></div>
+										<div className="dot"></div>
 										<div className='name_options'>Reader</div>
 									</label>
 								</div>
@@ -197,44 +197,44 @@ function Index(props) {
 
 
 			<section id="mu-counter">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="mu-counter-area">
+				<div className="container">
+					<div className="row">
+						<div className="col-md-12">
+							<div className="mu-counter-area">
 
-								<div class="mu-counter-block containerC">
-									<div class="row rowC">
+								<div className="mu-counter-block containerC">
+									<div className="row rowC">
 
 
-										<div class="col-md-3 col-sm-6" >
-											<div class="mu-single-counter">
-												<i class="fa fa-files-o" aria-hidden="true"></i>
-												<div class="counter-value" data-count={props.index ? props.index.pages : 0}>0</div>
-												<h5 class="mu-counter-name">Total Pages</h5>
+										<div className="col-md-3 col-sm-6" >
+											<div className="mu-single-counter">
+												<i className="fa fa-files-o" aria-hidden="true"></i>
+												<div className="counter-value" data-count={props.index ? props.index.pages : 0}>0</div>
+												<h5 className="mu-counter-name">Total Pages</h5>
 											</div>
 										</div>
 
-										<div class="col-md-3 col-sm-6" >
-											<div class="mu-single-counter">
-												<i class="fa fa-file-text-o" aria-hidden="true"></i>
-												<div class="counter-value" data-count={props.index ? props.index.books : 0}>0</div>
-												<h5 class="mu-counter-name">Books</h5>
+										<div className="col-md-3 col-sm-6" >
+											<div className="mu-single-counter">
+												<i className="fa fa-file-text-o" aria-hidden="true"></i>
+												<div className="counter-value" data-count={props.index ? props.index.books : 0}>0</div>
+												<h5 className="mu-counter-name">Books</h5>
 											</div>
 										</div>
 
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-single-counter">
-												<i class="fa fa-users" aria-hidden="true"></i>
-												<div class="counter-value" data-count={props.index ? props.index.authors : 0}>0</div>
-												<h5 class="mu-counter-name">Authors</h5>
+										<div className="col-md-3 col-sm-6">
+											<div className="mu-single-counter">
+												<i className="fa fa-users" aria-hidden="true"></i>
+												<div className="counter-value" data-count={props.index ? props.index.authors : 0}>0</div>
+												<h5 className="mu-counter-name">Authors</h5>
 											</div>
 										</div>
 
-										<div class="col-md-3 col-sm-6">
-											<div class="mu-single-counter">
-												<i class="fa fa-users" aria-hidden="true"></i>
-												<div class="counter-value" data-count={props.index ? props.index.readers : 0}>0</div>
-												<h5 class="mu-counter-name">Readers</h5>
+										<div className="col-md-3 col-sm-6">
+											<div className="mu-single-counter">
+												<i className="fa fa-users" aria-hidden="true"></i>
+												<div className="counter-value" data-count={props.index ? props.index.readers : 0}>0</div>
+												<h5 className="mu-counter-name">Readers</h5>
 											</div>
 										</div>
 
@@ -252,16 +252,16 @@ function Index(props) {
 
 
 			<section id="mu-Authors">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="mu-testimonials-area">
-								<div class="mu-heading-area">
-									<h2 class="mu-heading-title">Top Authors</h2>
-									<span class="mu-header-dot"></span>
+				<div className="container">
+					<div className="row">
+						<div className="col-md-12">
+							<div className="mu-testimonials-area">
+								<div className="mu-heading-area">
+									<h2 className="mu-heading-title">Top Authors</h2>
+									<span className="mu-header-dot"></span>
 								</div>
 
-								<div class="mu-testimonials-block">
+								<div className="mu-testimonials-block">
 									<CarouselAuthor />
 								</div>
 
