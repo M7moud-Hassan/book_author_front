@@ -1,6 +1,6 @@
 # Getting Started with  Author Book app
 
-[![Video Title](https://img.youtube.com/vi/Sr8g3lMEy4E/0.jpg)](https://www.youtube.com/watch?v=Sr8g3lMEy4E)
+[![Video on Youtube](images/video.PNG)](https://www.youtube.com/watch?v=Sr8g3lMEy4E)
 <br/>
 <br/>
 ![Image Alt Text](images/image1.PNG)
