@@ -272,7 +272,7 @@ function EditBook(props) {
             <form onSubmit={handleSubmit}>
                 <h3 className="text-center">Page {numPage}</h3>
                 <Editor
-                    // apiKey={"aul16ni1wyfshcuof1s88xy7ya3jw61q8dh5kfl26bhaxf0z"}
+                    apiKey={"aul16ni1wyfshcuof1s88xy7ya3jw61q8dh5kfl26bhaxf0z"}
                     value={content}
                     init={{
                         height: 300,

@@ -17,7 +17,11 @@ function NavBar() {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand"><i className="fa fa-book" aria-hidden="true"></i> Books</a>
+            <NavLink onClick={
+              ()=>{
+                window.location='/home'
+              }
+            } className="navbar-brand"><i className="fa fa-book" aria-hidden="true"></i> Books</NavLink>
           </div>
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav mu-menu navbar-right">

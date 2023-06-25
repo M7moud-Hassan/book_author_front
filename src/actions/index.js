@@ -291,7 +291,11 @@ export function createPage(data, props) {
             toast.success('Page created successfully')
             props.getPages(data.cuurentPage, data.book, data.accessToken)
         }).catch((error) => {
+            if(error.response.data.content){
+                toast.error(error.response.data.content[0])
+            }else{
             toast.error('error occur try again')
+        }
         })
     }
 
@@ -310,7 +314,9 @@ export function updatePage(data, props) {
             if (error.response.data.error) {
                 toast.error('Page not exit')
                 window.location = '/'
-            } else {
+            } else if(error.response.data.content){
+                toast.error(error.response.data.content[0])
+            } else{
                 toast.error('error occur try again')
             }
         })

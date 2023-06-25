@@ -8,6 +8,7 @@ import 'dropify/dist/js/dropify.min.js';
 import '../../css/main.css'
 import $ from 'jquery';
 import CarouselAuthor from '../index/carouselAuthor';
+import { toast } from 'react-toastify';
 function Index(props) {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
@@ -39,6 +40,7 @@ function Index(props) {
 		const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 		if (!passwordPattern.test(password)) {
 			setIsPasswordValid(false);
+			toast.error('Password must contain at least one uppercase letter, one digit, and be at least 8 characters long.');
 			return;
 		} else {
 			setIsPasswordValid(true);
@@ -47,6 +49,7 @@ function Index(props) {
 		const usernamePattern = /^[a-zA-Z0-9_]{3,20}$/;
 		if (!usernamePattern.test(username)) {
 			setIsUsernameValid(false);
+			toast.error('Username must contain only alphanumeric characters and underscores (3-20 characters).');
 			return;
 		}
 		setIsUsernameValid(true);
